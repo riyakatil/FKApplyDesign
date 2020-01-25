@@ -88,15 +88,15 @@ class Board implements  boardInterface{
         arr = new ArrayList<ArrayList<singleTile>>(n);
         for(int i=0;i<n;i++) arr.set(i, new ArrayList<singleTile>(m));
 
-        for(int i=0;i<n;i++) for(int j=0;j<m;j++) arr.set(i).set(j)= new singleTile(dim);
+        for(int i=0;i<n;i++) for(int j=0;j<m;j++) arr.get(i).set(j, new singleTile(dim));
       tileEHM =new tileEventHandler();
     }
 
 
 
     //get Board method
-    public static Board getBoard(int n,int m){
-       if(Objects.isNull(b1)){ b1=new Board(n,m); }
+    public static Board getBoard(int n,int m,int dim){
+       if(Objects.isNull(b1)){ b1=new Board(n,m,dim); }
        return b1;
     }
    public boolean isEmpty(Board b){
@@ -129,7 +129,7 @@ class Board implements  boardInterface{
 
 //second interface  (game manager will talk to config manager)
 interface configurationManagerInterface{
- private   void configureGame();
+  
     void startGame();
     void exitGame();
   //  boardManager getBoard(); //BoardManager
@@ -143,9 +143,9 @@ class configurationManager implements configurationManagerInterface{
   
   private Board b1;
   userInput u1;
-  void startGame()
-  { 
-   System.out.println("Enter no of rows in game");
+  private void configureGame()
+  {
+       System.out.println("Enter no of rows in game");
    int rows= Integer.parseInt(u1.getInput());
    System.out.println("Enter no of columns in game");
    int cols= Integer.parseInt(u1.getInput());
@@ -167,13 +167,19 @@ class configurationManager implements configurationManagerInterface{
 
     b1.getBoard(rows,cols,dim);
     
+  }
+public  void startGame()
+  { 
 
+
+  
+configureGame();
 
 
   }
 
 
-  void exitGame(){
+ public void exitGame(){
 
   }
 } 
