@@ -32,9 +32,9 @@ interface tile{
 class singleTile implements tile{
     private ArrayList<Integer> dimension;
     private  boolean status;
-    singleTile(int ...l1){
-        int num=l1.length;
-        dimension=new ArrayList<>(Collections.nCopies(num,0));
+    singleTile(int n){
+      //  int num=l1.length;
+        dimension=new ArrayList<>(Collections.nCopies(n,0));
         this.status=false;
     }
  public   boolean getStatus(){
@@ -84,9 +84,11 @@ class Board implements  boardInterface{
     private static Board b1=null;
 
     //private constructor becuase this is singleton class
-    private Board(int n,int m){
+    private Board(int n,int m,int dim){
         arr = new ArrayList<ArrayList<singleTile>>(n);
-        for(int i=0;i<n;i++) arr.set(i, new ArrayList<>(m));
+        for(int i=0;i<n;i++) arr.set(i, new ArrayList<singleTile>(m));
+
+        for(int i=0;i<n;i++) for(int j=0;j<m;j++) arr.set(i).set(j)= new singleTile(dim);
       tileEHM =new tileEventHandler();
     }
 
@@ -125,49 +127,61 @@ class Board implements  boardInterface{
 }
 
 
+//second interface  (game manager will talk to config manager)
+interface configurationManagerInterface{
+ private   void configureGame();
+    void startGame();
+    void exitGame();
+  //  boardManager getBoard(); //BoardManager
+    //void getRules(); //JudgeManager
+    //void getPlayerTeam();  // playerTeamManager
+    //void playGame(); //PlayGameManager  -- start game
 
-/*
-
-class boardManager implements boardManagerInterface{
-    private userInput obj;
-    private boardInterface boardTemplate;
-    boardManager(){
-        obj=new handleUserInput();
-
-
-    }
-    public void configureGame(){
-
-        System.out.println("Enter number of rows in board");
-        int rows=Integer.parseInt(obj.getInput());
-
-        System.out.println("Enter number of columns in board");
-        int cols=Integer.parseInt(obj.getInput());
-        boardTemplate=new Board();
-
-    }
-
-    public void eventManager(){}
-}
-/*
-class board implements  boardManager{
-    private int rows,cols;
-
-    board(int a=3,int b=3){
-        this.rows=a;
-        this.cols=b;
-    }
-
-
- public    int getRows() { return this.rows; }
-   public  int getCols() { return this.cols; }
 }
 
+class configurationManager implements configurationManagerInterface{
+  
+  private Board b1;
+  userInput u1;
+  void startGame()
+  { 
+   System.out.println("Enter no of rows in game");
+   int rows= Integer.parseInt(u1.getInput());
+   System.out.println("Enter no of columns in game");
+   int cols= Integer.parseInt(u1.getInput());
+
+
+    System.out.println("Enter no of dimensions in game");
+    int dim= Integer.parseInt(u1.getInput());    
+
+   System.out.println("Enter no of players in game");
+    int noOfPlayers=Integer.parseInt(u1.getInput());
+
+    ArrayList<Integer> l1=new ArrayList<>();
+    for(int i=0;i<noOfPlayers;i++){
+        System.out.println("enter 0 if "+i+" current player is human");
+        int choice=Integer.parseInt(u1.getInput());
+        if(choice==0){ l1.add(0);}
+        else l1.add(1);
+    }
+
+    b1.getBoard(rows,cols,dim);
+    
+
+
+
+  }
+
+
+  void exitGame(){
+
+  }
+} 
 
 interface playerType{
     void getPlayerType();
 }
-*/
+
 
 //first interface user will contact with this interface only to start the game.
 interface gameManagerInterface{
@@ -195,17 +209,6 @@ class gameManager implements gameManagerInterface{
 
 }
 
-//second interface  (game manager will talk to config manager)
-interface configurationManagerInterface{
-    void configureGame();
-    void startGame();
-    void exitGame();
-  //  boardManager getBoard(); //BoardManager
-    //void getRules(); //JudgeManager
-    //void getPlayerTeam();  // playerTeamManager
-    //void playGame(); //PlayGameManager  -- start game
-
-}
 
 
 interface  playGameManager
