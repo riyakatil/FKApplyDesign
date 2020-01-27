@@ -89,7 +89,7 @@ int countO=0,countX=0;
 
         
        if(b1.getCharAtPosition(i,i)=='X'){countX++ ;}
-       else if(b1.getCharAtPosition(i,i)=='0'){countO++ ;}
+       else if(b1.getCharAtPosition(i,i)=='O'){countO++ ;}
       
      
      
@@ -104,7 +104,7 @@ int countO=0,countX=0;
 
         
        if(b1.getCharAtPosition(row-1-i,i)=='X'){countX++ ;}
-       else if(b1.getCharAtPosition(row-1-i,i)=='0'){countO++ ;}
+       else if(b1.getCharAtPosition(row-1-i,i)=='O'){countO++ ;}
       
      
      
@@ -129,7 +129,7 @@ boolean flag=false;
       for(int j=0;j<row;j++){
         
        if(b1.getCharAtPosition(j,i)=='X'){countX++ ;}
-       else if(b1.getCharAtPosition(j,i)=='0'){countO++ ;}
+       else if(b1.getCharAtPosition(j,i)=='O'){countO++ ;}
       }
       if(countX==row ||  countO==row) {flag=true; break;}
      
@@ -154,7 +154,7 @@ boolean flag=false;
       for(int j=0;j<col;j++){
         
        if(b1.getCharAtPosition(i,j)=='X'){countX++ ;}
-       else if(b1.getCharAtPosition(i,j)=='0'){countO++ ;}
+       else if(b1.getCharAtPosition(i,j)=='O'){countO++ ;}
       }
       if(countX==row ||  countO==row) {flag=true; break;}
      
@@ -172,10 +172,14 @@ boolean flag=false;
 
 // Every Player can check board status , will move and has its own title
 
-interface Player{
-  
-  void getBoardStatus();
+interface PrimaryPlayerInterface{
   int[] nextMove();
+  void printBoardStatus();
+}
+
+interface Player extends PrimaryPlayerInterface{
+  
+  
 
   String getTitle();
 
@@ -193,23 +197,22 @@ class Human implements Player{
     this.u1=new UserInteraction();
   }
 
-  public void getBoardStatus(){
-    cm1.getBoardStatus();
+  public void printBoardStatus(){
+    cm1.printBoardStatus();
   }
 
 
 public int[] nextMove(){
 
         int pos[]=new int[2];
-        String s="Enter x";
+        String s="Enter cell no for next move";
         u1.showMessageToUser(s);
-        int x=u1.intInput(); 
-
-        s="Enter y";
-         u1.showMessageToUser(s);
-       int y=u1.intInput();
-       pos[0]=x;
-       pos[1]=y;
+        int cell_no=u1.intInput();
+        cell_no--;
+        int row=cm1.getRowOfBoard();
+        
+       pos[0]=cell_no/row;
+       pos[1]=cell_no%row;
 return pos;
 }
 
@@ -229,8 +232,8 @@ class Computer implements Player
 
   }
 
-  public void getBoardStatus(){
-    cm1.getBoardStatus();
+  public void printBoardStatus(){
+    cm1.printBoardStatus();
   }
 
 public int[] nextMove(){
@@ -251,18 +254,21 @@ public String getTitle(){return this.title;}
 
 
 //BoardInterface is responsible for any activity related to Board
-
-
-interface BoardInterface
-{
-     boolean isEmpty();
+interface PrimaryBoardInterface{
+  boolean isEmpty();
+  
+}
+interface BoardInterface extends PrimaryBoardInterface
+{ 
+    void updateBoard(int x,int y,char ch);
+     
     boolean isFull();
 
     int[] getEmpty();
     int getRow();
     int getCol();
 
-  void updateBoard(int x,int y,char ch);
+  
   boolean isValid(int i,int j);
   char getCharAtPosition(int i,int j);
 }
@@ -270,7 +276,7 @@ interface BoardInterface
 
 // Every board can be only one - singleton class
 class Board implements  BoardInterface{
-    public ArrayList<char[]> arr;
+    private ArrayList<char[]> arr;
     private int row;
     private int col;
 
@@ -287,11 +293,15 @@ class Board implements  BoardInterface{
   for(int i=0;i<n;i++) 
             arr.add(new char[m]);
 
- 
+      int cell_no=1;
 
         for(int i=0;i<n;i++) 
+            {
             for(int j=0;j<m;j++) 
-                arr.get(i)[j]='_';
+                { //char ch=(char)(cell_no+'0');
+                  char ch='_';
+                  arr.get(i)[j]=ch; cell_no++;}
+            }
 
               this.row=n;
               this.col=m;
@@ -316,7 +326,7 @@ class Board implements  BoardInterface{
        {
             for(int j=0;j<col;j++)
             {
-             if(this.arr.get(i)[j]=='_') 
+             if(this.arr.get(i)[j]!='X' && this.arr.get(i)[j]!='O'  ) 
               {return  true; }
             }
       }
@@ -331,7 +341,7 @@ class Board implements  BoardInterface{
       boolean flag=true;
         for(int i=0;i<row;i++){
             for(int j=0;j<col;j++){ 
-              if(this.arr.get(i)[j]=='_') {flag=  false; };
+              if(this.arr.get(i)[j]!='X' &&  this.arr.get(i)[j]!='O' ) {flag=  false; };
             }
         }
 
@@ -358,7 +368,7 @@ class Board implements  BoardInterface{
       {
         for(int j=0;j<col;j++)
         {
-            if(this.arr.get(i)[j]=='_')
+            if(this.arr.get(i)[j]!='X' && this.arr.get(i)[j]!='O'  )
             {
               pos[0]=i;
               pos[1]=j;
@@ -381,24 +391,35 @@ class Board implements  BoardInterface{
 
     //check if any position is valid
     public boolean isValid(int i,int j){
-      if(i>=0 && j>=0 && i<this.getRow() && j<this.getCol() && this.arr.get(i)[j]=='_'){return true;}
+      if(i>=0 && j>=0 && i<this.getRow() && j<this.getCol() && this.arr.get(i)[j]!='X' && this.arr.get(i)[j]!='O' ) {return true;}
       return false;
     }
 
 
     // get current pos of board
     public char getCharAtPosition(int i,int j){
-      return this.arr.get(i)[j];
+      return (char)this.arr.get(i)[j];
     }
 
 }
 
 
 //second interface  (game manager will talk to config manager)
-interface ConfigurationManagerInterface{
+// Board, Player,Judge all will communicate with each other using this class only.
+
+interface PrimaryConfigurationManagerInterface{
+ void playGame();
+    void configureGame(int i);
+
+}
+interface ConfigurationManagerInterface extends PrimaryConfigurationManagerInterface{
   
-    void startGame();
+    //void Game();
     void exitGame();
+    int getRowOfBoard();
+   
+    void printBoardStatus();
+    int[]getFreeCellOfBoard();
 
 
 }
@@ -410,27 +431,24 @@ class ConfigurationManager implements ConfigurationManagerInterface{
   private Player firstPlayer;
   private Player secondPlayer;
   private JudgeInterface j1;
+  private static ConfigurationManager cm1;
 
   private UserInteractionInterface u1;
-  private void configureGame()
+
+  private ConfigurationManager(){}
+
+  public static ConfigurationManager getConfigurationManager(){
+    if(cm1==null){cm1=new ConfigurationManager();}
+    return cm1;
+  }
+
+  public void configureGame(int i)
   {
        
 
          u1=new UserInteraction();
          int choice,row,col;
          String s;
-
-
-         while(true){
-          s="Enter 1 for Two Player Game , 2 for Human-Computer Game, 3 for exit";
-          this.printMessage(s);
-         
-          choice=this.getUserIntegerInput();
-          if(choice==1 || choice==2 || choice==3){break;}
-        }
-
-        if(choice==3){this.exitGame();}
-
 
         while(true){
           s="Enter Rows";
@@ -446,7 +464,7 @@ class ConfigurationManager implements ConfigurationManagerInterface{
         b1=this.getBoard(row,col);
 
 
-       if(choice==1){
+       if(i==1){
              firstPlayer=getHumanPlayer(0);
              secondPlayer=getHumanPlayer(1);}
     else{
@@ -455,14 +473,13 @@ class ConfigurationManager implements ConfigurationManagerInterface{
           }
 
     
-    //b1.getBoard(rows,cols,dim);
     j1=getJudge();
-    this.playGame();
+
     
   }
 
 
-  private void playGame()
+  public void playGame()
 
   {  
       String s;
@@ -477,11 +494,20 @@ class ConfigurationManager implements ConfigurationManagerInterface{
       boolean chance =true;   // which Player has its turn 
       boolean flag=false;   // Flag is used to know if any one has won
 
+      int index=1;
+      System.out.println("Enter Cell no in wrt following format ");
+      for(int i=0;i<row;i++){
+        for(int j=0;j<col;j++){
+          System.out.print(index+" ");
+          index++;
+        }
+        System.out.println();
+      }
 
       s="Initial Board Status is: ";
       this.printMessage(s);
 
-      this.getBoardStatus();
+      this.printBoardStatus();
 
       while(!this.checkIfBoardIsFull())
       {
@@ -494,7 +520,7 @@ class ConfigurationManager implements ConfigurationManagerInterface{
             if(checkIfThisIsValidPosition(pos)){
                 break;
             }}
-            char ch='0';
+            char ch='O';
             
             if(!chance) 
             {
@@ -513,7 +539,7 @@ class ConfigurationManager implements ConfigurationManagerInterface{
             } 
 
               chance=!chance;
-              this.getBoardStatus();
+              this.printBoardStatus();
 
 
 
@@ -538,10 +564,7 @@ class ConfigurationManager implements ConfigurationManagerInterface{
     }
 
 
-    public  void startGame()
-      {   
-        configureGame();
-      }
+    
 
 
     public void exitGame()
@@ -551,7 +574,7 @@ class ConfigurationManager implements ConfigurationManagerInterface{
     }
 
 
-    public void getBoardStatus()
+    public void printBoardStatus()
     { 
       int row=b1.getRow();
       int col=b1.getCol();
@@ -595,7 +618,10 @@ class ConfigurationManager implements ConfigurationManagerInterface{
 
   private void printMessage(Player whoseTurn,int []pos,char ch){
 
-  String s=whoseTurn.getTitle()+" has put "+ch+" on position ("+pos[0]+","+pos[1]+")";
+
+    int row=this.getRowOfBoard();
+    int cell= row*pos[0]+pos[1];
+  String s=whoseTurn.getTitle()+" has put "+ch+" on cell "+(cell+1);
   u1.showMessageToUser(s);
   }
   private void printMessage(String s){
@@ -620,40 +646,49 @@ class ConfigurationManager implements ConfigurationManagerInterface{
   private boolean checkIfThisIsValidPosition(int[] pos){
     return this.b1.isValid(pos[0],pos[1]);
   }
+
+  public int getRowOfBoard(){
+    return b1.getRow();
+  }
 } 
 
 
 
 //first interface user will contact with this interface only to start the game.
-interface gameManagerInterface{
-    void showInfo();
-    void startNewGame();
+
+interface PrimaryGameManagerInterface{
+  void startNewGame(int i);
     void exitGame();
- //   gameManager getGameManager();
+}
+interface GameManagerInterface extends PrimaryGameManagerInterface{
+    void showInfo();
+    
+ //   GameManager getGameManager();
 }
 
-class gameManager implements gameManagerInterface{
+class GameManager implements GameManagerInterface{
     private ConfigurationManager configMI;
-    private static gameManager gm1=null;
+    private static GameManager gm1=null;
     
-    UserInteractionInterface u1;
-    private gameManager(){
+    private UserInteractionInterface u1;
+    private GameManager(){
 
     }
-    public static gameManager getGameManager(){
-            if(gm1==null){gm1=new gameManager();
+    public static GameManagerInterface getGameManager(){
+            if(gm1==null){gm1=new GameManager();
                         
     }        return gm1;
     }
 
 
 
-    public void startNewGame(){
+    public void startNewGame(int i){
       
-      configMI=new ConfigurationManager();
+      configMI=ConfigurationManager.getConfigurationManager();
     
      
-    this.configMI.startGame();
+    this.configMI.configureGame(i);
+    this.configMI.playGame();
 
   }
     public void exitGame(){System.exit(0);}
@@ -664,39 +699,41 @@ class gameManager implements gameManagerInterface{
       String s;
         int choice=0;
       while(true){
-      s="Enter 1 to start the game , 2 for exit";
-      u1.showMessageToUser(s);
-
-    
-       choice=u1.intInput();
-        if(choice==1 || choice ==2){break;}
+          s="Enter 1 for Two Player Game , 2 for Human-Computer Game, 3 for exit";
+          this.printMessage(s);
+         
+          choice=this.getUserIntegerInput();
+          if(choice==1 || choice==2 || choice==3){break;}
         }
-      if(choice==1){
-        this.startNewGame();
+
+
+      if(choice==1 || choice==2){
+        this.startNewGame(choice);
 
       }
-      else{
+      else {
         this.exitGame();
 
       }
 
 
     }
+
+     private void printMessage(String s){
+    u1.showMessageToUser(s);
+  }
+    private int getUserIntegerInput(){return u1.intInput();}
+
+
 }
-
-
-
-
-
-
 
 
 public class Main {
 
     public static void main(String[] args) {
 
-        gameManager g1;
-        g1=gameManager.getGameManager();
+        GameManagerInterface g1;
+        g1=GameManager.getGameManager();
         g1.showInfo();
 
 
