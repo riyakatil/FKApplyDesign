@@ -188,7 +188,7 @@ interface Player extends PrimaryPlayerInterface{
 
 class Human implements Player{
   private String title;
-  private ConfigurationManager cm1;
+  private ConfigurationManagerInterface cm1;
   private UserInteractionInterface u1;
 
   Human(ConfigurationManager cm1,int i){
@@ -224,7 +224,7 @@ public String getTitle(){return this.title;}
 
 class Computer implements Player
 { private String title;
-       private ConfigurationManager cm1;
+       private ConfigurationManagerInterface cm1;
 
   Computer(ConfigurationManager cm1){
     this.cm1=cm1;
@@ -420,6 +420,8 @@ interface ConfigurationManagerInterface extends PrimaryConfigurationManagerInter
    
     void printBoardStatus();
     int[]getFreeCellOfBoard();
+     void configureGame(int i);
+     void playGame();
 
 
 }
@@ -431,13 +433,13 @@ class ConfigurationManager implements ConfigurationManagerInterface{
   private Player firstPlayer;
   private Player secondPlayer;
   private JudgeInterface j1;
-  private static ConfigurationManager cm1;
+  private static ConfigurationManagerInterface cm1;
 
   private UserInteractionInterface u1;
 
   private ConfigurationManager(){}
 
-  public static ConfigurationManager getConfigurationManager(){
+  public static ConfigurationManagerInterface getConfigurationManager(){
     if(cm1==null){cm1=new ConfigurationManager();}
     return cm1;
   }
@@ -667,7 +669,7 @@ interface GameManagerInterface extends PrimaryGameManagerInterface{
 }
 
 class GameManager implements GameManagerInterface{
-    private ConfigurationManager configMI;
+    private ConfigurationManagerInterface configMI;
     private static GameManager gm1=null;
     
     private UserInteractionInterface u1;
