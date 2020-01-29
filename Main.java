@@ -7,6 +7,9 @@ import java.io.*;
 import java.util.Arrays; 
 import java.util.stream.*;
 
+
+
+
 // User Interaction Interface
 interface UserInteractionInterface{
   int intInput();
@@ -39,11 +42,14 @@ public  String stringInput(){
   }
 }
 
+
+//------------------------------------------------------------------------------------------------------------------------
+
 // Exhibits Judge Behaviour
 interface JudgeInterface
 {
   void declareWinner(Player p1);
-  boolean gameOver(ArrayList<char[]> b1,int a,int b);
+  boolean gameOver(ArrayList<cellInterface[]> b1,int a,int b);
 }
 
 
@@ -54,13 +60,13 @@ class JudgeHex implements JudgeInterface{
     System.out.println(p1.getTitle()+" has won");
   }
 
-public boolean gameOver(ArrayList<char[]> ar1,int x,int y) 
+public boolean gameOver(ArrayList<cellInterface[]> ar1,int x,int y) 
 {
        
       boolean f1=diagonalCrossedHex(ar1,x,y);
-     // boolean f2= rowCrossed(ar1);
+     
       boolean f3=  columnCrossedHex(ar1,x,y);
-    //  System.out.println(f1+" "+f2+" "+f3);
+   
       return f1||f3;
 }
 
@@ -89,7 +95,7 @@ private int consecutiveChar(ArrayList<Character> a1,char ch)
 
  
 
-private boolean diagonalCrossedHex(ArrayList<char[]> ar1,int x,int y)
+private boolean diagonalCrossedHex(ArrayList<cellInterface[]> ar1,int x,int y)
 {
  int row=ar1.size();
 
@@ -97,18 +103,6 @@ private boolean diagonalCrossedHex(ArrayList<char[]> ar1,int x,int y)
 int x_diag,y_diag,x_antiDiag,y_antiDiag;
 x_diag=y_diag=x_antiDiag=y_antiDiag=0;
 
-
-/*
-int a=Math.min(x,y);
-if(a==x){
-  x_diag=0;
-  y_diag-=a;
-}
-else{
-  x_diag-=a;
-  y_diag=0;
-
-}*/
 
 x_diag=x;
 y_diag=y;
@@ -128,8 +122,9 @@ while(x_antiDiag-1 >=0 && y_antiDiag+1<row){x_antiDiag--;y_antiDiag++;}
 int cur_x=x_diag;
 int cur_y=y_diag;
 ArrayList<Character> a1=new ArrayList<Character>();
+
 while(cur_x<row && cur_y<row){
-  a1.add(ar1.get(cur_x)[cur_y]);
+  a1.add(ar1.get(cur_x)[cur_y].getChar());
   cur_x++;
   cur_y++;
 }
@@ -146,7 +141,7 @@ cur_x=x_antiDiag;
 cur_y=y_antiDiag;
 a1=new ArrayList<Character>();
 while(cur_x<row && cur_y>=0){
-  a1.add(ar1.get(cur_x)[cur_y]);
+  a1.add(ar1.get(cur_x)[cur_y].getChar());
   cur_x++;
   cur_y--;
 }
@@ -161,7 +156,7 @@ return false;
 }
 
 
-private boolean columnCrossedHex(ArrayList<char[]> ar1,int x,int y){
+private boolean columnCrossedHex(ArrayList<cellInterface[]> ar1,int x,int y){
 
 int cur_x=0;
 int cur_y=y;
@@ -170,7 +165,7 @@ int row=ar1.size();
 ArrayList<Character> a1=new ArrayList<Character>();
 
 while(cur_x<row && cur_y<row){
-  a1.add(ar1.get(cur_x)[cur_y]);
+  a1.add(ar1.get(cur_x)[cur_y].getChar());
   cur_x=cur_x+2;
   
 }
@@ -199,7 +194,7 @@ class JudgeSquare implements JudgeInterface
 
 } 
 
-  public boolean gameOver(ArrayList<char[]> ar1,int basicUnit,int b)   // It checks in row,column,diagonal for win condition
+  public boolean gameOver(ArrayList<cellInterface[]> ar1,int basicUnit,int b)   // It checks in row,column,diagonal for win condition
 {   
      
 
@@ -208,7 +203,7 @@ class JudgeSquare implements JudgeInterface
       boolean f1=diagonalCrossed(ar1);
       boolean f2= rowCrossed(ar1);
       boolean f3=  columnCrossed(ar1);
-    //  System.out.println(f1+" "+f2+" "+f3);
+    
       return f1||f2||f3;
      }
 
@@ -222,7 +217,7 @@ class JudgeSquare implements JudgeInterface
 
 //row crosswed
 
-private boolean rowCrossed(ArrayList<char[]> ar1,int basicUnit){
+private boolean rowCrossed(ArrayList<cellInterface[]> ar1,int basicUnit){
 
 if(ar1.size()<basicUnit){
  return false;
@@ -243,19 +238,19 @@ if(ar1.size()==basicUnit){
    int blockSize= depth/basicUnit;
 
 
-  ArrayList<char[]> arr=new ArrayList<char[]>();
-   arr = new ArrayList<char[]>(blockSize);
+  ArrayList<cellInterface[]> arr=new ArrayList<cellInterface[]>();
+   arr = new ArrayList<cellInterface[]>(blockSize);
 
 
   for(int i=0;i<blockSize;i++) 
-           { arr.add(new char[blockSize]);}
+           { arr.add(new cellInterface[blockSize]);}
 
 
 
 for(int i=0;i<depth;i=i+blockSize){
 
    int count=0;
-//   arr = new ArrayList<char[]>(blockSize);
+
 
   for(int j=0;j<depth;j=j+blockSize){
      
@@ -294,7 +289,7 @@ return false;
 
 //columncrosswed
 
-private boolean columnCrossed(ArrayList<char[]> ar1,int basicUnit){
+private boolean columnCrossed(ArrayList<cellInterface[]> ar1,int basicUnit){
 
 if(ar1.size()<basicUnit){
  return false;
@@ -315,12 +310,12 @@ if(ar1.size()==basicUnit){
    int blockSize= depth/basicUnit;
 
 
-  ArrayList<char[]> arr=new ArrayList<char[]>();
-   arr = new ArrayList<char[]>(blockSize);
+  ArrayList<cellInterface[]> arr=new ArrayList<cellInterface[]>();
+   arr = new ArrayList<cellInterface[]>(blockSize);
 
 
   for(int i=0;i<blockSize;i++) 
-            arr.add(new char[blockSize]);
+            arr.add(new cellInterface[blockSize]);
   
 
   for(int j=0;j<depth;j=j+blockSize){
@@ -353,7 +348,7 @@ return false;
 
 
 //diagonal crossed
-private boolean diagonalCrossed(ArrayList<char[]> ar1,int basicUnit){
+private boolean diagonalCrossed(ArrayList<cellInterface[]> ar1,int basicUnit){
 
 if(ar1.size()<basicUnit){
  return false;
@@ -373,12 +368,12 @@ if(ar1.size()==basicUnit){
    
    int blockSize= depth/basicUnit;
 
-   ArrayList<char[]> arr=new ArrayList<char[]>();
-   arr = new ArrayList<char[]>(blockSize);
+   ArrayList<cellInterface[]> arr=new ArrayList<cellInterface[]>();
+   arr = new ArrayList<cellInterface[]>(blockSize);
 
 
   for(int i=0;i<blockSize;i++) 
-            arr.add(new char[blockSize]);
+            arr.add(new cellInterface[blockSize]);
 
 // diagonaly check
 
@@ -432,15 +427,10 @@ if(count== basicUnit){return true;}
 return false;
 //Anti Diagonally
 
-
-
-
-    
-
 }
 
 
-private boolean diagonalCrossed(ArrayList<char[]> ar1) 
+private boolean diagonalCrossed(ArrayList<cellInterface[]> ar1) 
 {
 
   //ArrayList<char[]> b1=tmp.arr;
@@ -459,8 +449,8 @@ int countO=0,countX=0;
        
 
         
-       if(ar1.get(i)[i]=='X'){countX++ ;}
-       else if(ar1.get(i)[i]=='O'){countO++ ;}
+       if(ar1.get(i)[i].getChar()=='X'){countX++ ;}
+       else if(ar1.get(i)[i].getChar()=='O'){countO++ ;}
       
      
      
@@ -474,8 +464,8 @@ int countO=0,countX=0;
       
 
         
-       if(ar1.get(row-1-i)[i]=='X'){countX++ ;}
-       else if(ar1.get(row-1-i)[i]=='O'){countO++ ;}
+       if(ar1.get(row-1-i)[i].getChar()=='X'){countX++ ;}
+       else if(ar1.get(row-1-i)[i].getChar()=='O'){countO++ ;}
       
      
      
@@ -489,7 +479,7 @@ int countO=0,countX=0;
 }
 
 
-private boolean columnCrossed(ArrayList<char[]> ar1) 
+private boolean columnCrossed(ArrayList<cellInterface[]> ar1) 
 { 
     int row=ar1.size();
   int col=row;
@@ -500,8 +490,8 @@ boolean flag=false;
       int countX=0,countO=0;
       for(int j=0;j<row;j++){
         
-       if(ar1.get(j)[i]=='X'){countX++ ;}
-       else if(ar1.get(j)[i]=='O'){countO++ ;}
+       if(ar1.get(j)[i].getChar()=='X'){countX++ ;}
+       else if(ar1.get(j)[i].getChar()=='O'){countO++ ;}
       }
       if(countX==row ||  countO==row) {flag=true; break;}
      
@@ -512,7 +502,7 @@ boolean flag=false;
     return flag; 
 } 
 
-private boolean rowCrossed(ArrayList<char[]> ar1) 
+private boolean rowCrossed(ArrayList<cellInterface[]> ar1) 
 { 
 
     
@@ -525,8 +515,8 @@ boolean flag=false;
       int countX=0,countO=0;
       for(int j=0;j<col;j++){
         
-       if(ar1.get(i)[j]=='X'){countX++ ;}
-       else if(ar1.get(i)[j]=='O'){countO++ ;}
+       if(ar1.get(i)[j].getChar()=='X'){countX++ ;}
+       else if(ar1.get(i)[j].getChar()=='O'){countO++ ;}
       }
       if(countX==row ||  countO==row) {flag=true; break;}
      
@@ -541,7 +531,7 @@ boolean flag=false;
 }
 
 
-
+//----------------------------------------------------------------------------------------------------------------------------------------
 
 // Every Player can check board status , will move and has its own title
 
@@ -562,13 +552,12 @@ class Human implements Player{
 
   private String title;
   private GameManagerInterface cm1;
-  private UserInteractionInterface u1;
+  
 
   Human(GameManager cm1,int i){
     this.cm1=cm1;
     this.title="Human"+(i+1);
-    this.u1=new UserInteraction();
-  }
+   }
 
   public void printBoardStatus(){
     cm1.printBoardStatus();
@@ -579,8 +568,8 @@ public int[] nextMove(){
 
         int pos[]=new int[2];
         String s="Enter cell no for next move";
-        u1.showMessageToUser(s);
-        int cell_no=u1.intInput();
+        cm1.printMessage(s);
+        int cell_no=cm1.getUserIntegerInput();
         cell_no--;
         int row=cm1.getDepthOfBoard();
 
@@ -623,19 +612,62 @@ public String getTitle(){return this.title;}
 }
 
 
+//------------------------------------------------------------------------------------------------------------------
 
-
-
-
-//BoardInterface is responsible for any activity related to Board
-interface PrimaryBoardInterface{
-  boolean isEmpty();
-  
+interface cellPrimaryInterface{
+ // int[] getCoOrdinates();
+   char getChar();
 }
 
-interface BoardInterface extends PrimaryBoardInterface
+interface cellInterface extends cellPrimaryInterface{
+  String getTitle();
+}
+
+class Squarecell implements cellInterface{
+ 
+  private String title;
+  private char ch;
+  Squarecell(char ch){  
+    this.title="SquareCell";
+    this.ch=ch;
+  }
+  
+  public String getTitle(){return this.title;}
+
+  public char getChar(){return this.ch;}
+
+  public void updateCell(char ch){ this.ch=ch;}
+
+}
+
+class HexCell implements cellInterface{
+
+private String title;
+  private char ch;
+  HexCell(char ch){  
+    this.title="HexCell";
+    this.ch=ch;
+  }
+  
+  public String getTitle(){return this.title;}
+
+  public char getChar(){return this.ch;}
+
+  public void updateCell(char ch){ this.ch=ch;}
+
+}
+
+
+
+//-------------------------------------------------------------------------------------------------------------------------------------
+
+//BoardInterface is responsible to create instance of board type
+
+
+interface BoardInterface 
 { 
-    void updateBoard(int x,int y,char ch);
+  /*
+    void updateBoard(int []coOrdinates,char ch);
      
     boolean isFull();
 
@@ -645,322 +677,218 @@ interface BoardInterface extends PrimaryBoardInterface
 
     boolean isValid(int i,int j);
     char getCharAtPosition(int i,int j);
-    ArrayList<char[]> getBoardPositions();
+    
     void reInitBoard(int n,int m);
+    */
+
+
+    void fillBoard();
+   // ArrayList<cellInterface[]> getState();
+    int getDepth();
+    int  getBasicUnit();
+    void reInitBoard(int n);
+    void printInitialFormat();
+    void updateBoard(int x,int y,char ch);
+    boolean checkIfBoardIsFull();
+    ArrayList<cellInterface[]> getBoardPositions();
+
+    char getCharAtPosition(int x,int y);
 
 }
 
 
-// Every board can be only one - singleton class
-class Board implements  BoardInterface
-{
-    private ArrayList<char[]> arr;
+class SquareBoard implements BoardInterface{
+
+    private ArrayList<cellInterface[]> arr;
     private int depth;
     private int basicUnit;
+    private static BoardInterface b1=null;
+    
 
-    private static Board b1=null;
 
+    private SquareBoard(int n)
+    { 
+       arr=new ArrayList<cellInterface[]>(n);
+       this.depth=n;
+       this.basicUnit=n;
 
-    private ArrayList<char[]> getSquareBoardMatrix(int n){
-
-      ArrayList<char[]> arr = new ArrayList<char[]>(n);
+       this.fillBoard();
+       
+       // this.arr=getSquareBoardMatrix(n);
       
-
-
-        for(int i=0;i<n;i++) 
-            arr.add(new char[n]);
-
-          for(int i=0;i<n;i++) 
-            {
-            for(int j=0;j<n;j++) 
-                { //char ch=(char)(cell_no+'0');
-                  char ch='_';
-                  arr.get(i)[j]=ch;}
-            }
-
-              this.depth=n;
-              this.basicUnit=n;
-
-              return arr;
     }
-
-
-    private ArrayList<char[]> getHexBoardMatrix(int n){
-
-      ArrayList<char[]> arr = new ArrayList<char[]>(2*n);
-      
-      System.out.println("iioooo");
-
-        for(int i=0;i<2*n;i++) 
-            arr.add(new char[2*n]);
-
-          char ch='*';
-          for(int i=0;i<2*n;i++) 
-            { boolean flag=true;
-            for(int j=0;j<2*n;j++) 
-                { 
-                  if(i%2==0){ if(flag){ch='*';} else {ch='_';}}
-                  else{
-                    if(flag){ch='_';} else {ch='*';}
-                  } flag=!flag;
-                  arr.get(i)[j]=ch;
-
-                }
-            }
-
-              this.depth=2*n;
-              this.basicUnit=2*n;
-
-              return arr;
-    }
-
-
-
-    private Board(int n,int choice)
-    { ArrayList<char[]> arr;
-
-      if(choice==1){
-       this. arr = getHexBoardMatrix(n);
-      
-      }
-      else{
-        this.arr=getSquareBoardMatrix(n);
-      }
-}
-  
-
-                
-
-
 
     //get Board method
-    public static BoardInterface getBoard(int n,int choice)
+    public static BoardInterface getSquareBoard(int n)
     {
-       if(Objects.isNull(b1)){ b1=new Board(n,choice); }
+       if(Objects.isNull(b1)){ b1=new SquareBoard(n); }
        return b1;
     }
 
 
 
-      //Board is empty
-    public boolean isEmpty()
+
+    public void fillBoard()
     {
 
-       for(int i=0;i<depth;i++)
-       {
-            for(int j=0;j<depth;j++)
+
+        for(int i=0;i<this.getDepth();i++) 
+            arr.add(new cellInterface[this.getDepth()]);
+
+          for(int i=0;i<this.getDepth();i++) 
             {
-             if(this.arr.get(i)[j]!='X' && this.arr.get(i)[j]!='O'  ) 
-              {return  true; }
-            }
-      }
-       return false;
-
-    }
-
-      //Board is full
-    public boolean isFull(){
-
-
-      boolean flag=true;
-        for(int i=0;i<depth;i++){
-            for(int j=0;j<depth;j++){ 
-              if(this.arr.get(i)[j]!='X' &&  this.arr.get(i)[j]!='O' ) {flag=  false; };
-            }
-        }
-
-       // System.out.println(" board is "+flag);
-        return flag;
-
-    }
-
-
-    //get no of rows
-    public int getDepth(){return this.depth;}
-
-
-    //get no of column
-    public int getBasicUnit(){return this.basicUnit;}
-
-
-    //get empty cell
-    public int[] getEmpty()
-    {
-      int [] pos=new int[2];
-      boolean flag=false;
-      for(int i=0;i<depth;i++)
-      {
-        for(int j=0;j<depth;j++)
-        {
-            if(this.arr.get(i)[j]!='X' && this.arr.get(i)[j]!='O'  )
-            {
-              pos[0]=i;
-              pos[1]=j;
-               
-              flag=true;
-              break;
-          }
-        }
-        
-        if(flag){break;}
-      }
-      return pos;
-    }
-
-
-    //updateBoard
-    public void updateBoard(int x,int y,char ch){
-      this.arr.get(x)[y]=ch;
-    }
-
-    //check if any position is valid
-    public boolean isValid(int i,int j){
-      if(i>=0 && j>=0 && i<this.getDepth() && j<this.getDepth() && this.arr.get(i)[j]!='X' && this.arr.get(i)[j]!='O'  && this.arr.get(i)[j]!='*') {return true;}
-      return false;
-    }
-
-
-    // get current pos of board
-    public char getCharAtPosition(int i,int j){
-      return (char)this.arr.get(i)[j];
-    }
-
-    public ArrayList<char[]> getBoardPositions(){return this.arr;}
-
-    public void reInitBoard(int n,int m){
-         arr = new ArrayList<char[]>(n);
-
-
-  for(int i=0;i<n;i++) 
-            arr.add(new char[n]);
-
-      int cell_no=1;
-
-        for(int i=0;i<n;i++) 
-            {
-            for(int j=0;j<n;j++) 
-                { //char ch=(char)(cell_no+'0');
+            for(int j=0;j<this.getDepth();j++) 
+                { 
                   char ch='_';
-                  arr.get(i)[j]=ch; cell_no++;}
+                  cellInterface tmp=new Squarecell(ch);
+
+                  arr.get(i)[j]=tmp;
+                }
             }
 
-              this.depth=n;
-              this.basicUnit=m;
+                
     }
 
-}
+    public int getDepth(){
+      return this.depth;
+    }
 
+    public int  getBasicUnit(){
+      return this.basicUnit;
+    }
 
-//second interface  (game manager will talk to config manager)
-// Board, Player,Judge all will communicate with each other using this class only.
+    public void reInitBoard(int n){
+      System.out.println("re");
+        this.arr=new ArrayList<cellInterface[]>(n);
+        this.depth=n;
+       //this.basicUnit=n;
+       this.fillBoard();
+       
+    }
 
-interface PrimaryGameManagerInterface{
- void playGame(int ch);
-    void configureGame(int i,String path);
+   public void printInitialFormat(){
+  int row=this.getDepth();
 
-}
-interface GameManagerInterface extends PrimaryGameManagerInterface{
-  
-    //void Game();
-    void exitGame();
-    int getDepthOfBoard();
-   
-    void printBoardStatus();
-    int[]getFreeCellOfBoard();
-     void configureGame(int i,String path);
-
-   //  void playGame();
-     String getPath();
-
-}
-
-class GameManager implements GameManagerInterface {
-  
-  private BoardInterface b1;
-  private String path;
-  private Player firstPlayer;
-  private Player secondPlayer;
-  private JudgeInterface j1;
-  private static GameManagerInterface cm1;
-
-  private UserInteractionInterface u1;
-
-  private GameManager(){}
-
-  public static GameManagerInterface getGameManager(){
-    if(cm1==null){cm1=new GameManager();}
-    return cm1;
-  }
-
-  public void configureGame(int i,String path)
-  { System.out.println("config");
-        this.path=path;
-
-         u1=new UserInteraction();
-         int choice,depth,basicUnit;
-         String s;
-
-         while(true){
-         s="Enter Tile Type: 1.Hex Tile 2.Square Tile  ";
-         this.printMessage(s);
-         choice=this.getUserIntegerInput();
-         if(choice!=1 && choice !=2){System.out.println("Enter Valid Input");}
-         else{break;}}
-          
-          s="Enter basic unit";
-         this.printMessage(s);
-         basicUnit=this.getUserIntegerInput();
-
-
-         b1=this.getBoard(basicUnit,choice);
-          
-
-        
-
-        
-
-
-       if(i==1){
-             firstPlayer=getHumanPlayer(0);
-             secondPlayer=getHumanPlayer(1);}
-    else{
-          firstPlayer=getHumanPlayer(0);
-          secondPlayer=getComputerPlayer();
-          }
-
-    if(choice==1)
-    j1=new JudgeHex();
-    else j1=new JudgeSquare();
-
-    this.playGame(choice);
-
-    
-  }
-
-
-
-private void PrintInitialForamat(int choice){
-  int row=this.getDepthOfBoard();
-  int col=row;
-  if(choice==2){
-    int index=0;
+     int index=1;
   System.out.println("Enter Cell no in wrt following format ");
       for(int i=0;i<row;i++){
-        for(int j=0;j<col;j++){
+        for(int j=0;j<row;j++){
           System.out.print(index+" ");
           index++;
         }
         System.out.println();
       }}
 
-      else{
-            
+
+ public void updateBoard(int x,int y,char ch){
+        this.arr.get(x)[y]=new Squarecell(ch);
+    }
+         
+          public boolean checkIfBoardIsFull(){
+       boolean flag=true;
+        for(int i=0;i<this.getDepth();i++){
+            for(int j=0;j<this.getDepth();j++){
+
+            char tmp=arr.get(i)[j].getChar(); 
+              if(tmp!='X' &&  tmp!='O' && tmp!='*') {flag=  false; };
+            }
+        }
+
+        return flag;
+    }  
+
+
+    public ArrayList<cellInterface[]> getBoardPositions(){return this.arr;} 
+
+    public char getCharAtPosition(int x,int y){
+      return arr.get(x)[y].getChar();
+    }
+ 
+}
+
+
+
+class HexBoard implements BoardInterface{
+
+    private ArrayList<cellInterface[]> arr;
+    private int depth;
+    private int basicUnit;
+    private static BoardInterface b1=null;
+    
+
+
+    private HexBoard(int n)
+    { 
+       arr=new ArrayList<cellInterface[]>(2*n);
+        this.depth=2*n;
+       this.basicUnit=2*n;
+       this.fillBoard();
+      
+
+       // this.arr=getSquareBoardMatrix(n);
+      
+    }
+
+    //get Board method
+    public static BoardInterface getHexBoard(int n)
+    {
+       if(Objects.isNull(b1)){ b1=new HexBoard(n); }
+       return b1;
+    }
+
+
+
+
+    public void fillBoard()
+    {
+
+        for(int i=0;i<this.getDepth();i++) 
+            arr.add(new cellInterface[this.getDepth()]);
+
+             char ch='*';
+          for(int i=0;i<this.getDepth();i++) 
+            { 
+              boolean flag=true;
+            for(int j=0;j<this.getDepth();j++) 
+                { 
+                  if(i%2==0){ if(flag){ch='*';} else {ch='_';}}
+                  else{
+                    if(flag){ch='_';} else {ch='*';}
+                  } flag=!flag;
+
+                  cellInterface tmp=new HexCell(ch);
+                  arr.get(i)[j]=tmp;
+
+                }
+            }
+
+              
+
+    }
+
+    public int getDepth(){
+      return this.depth;
+    }
+
+    public int getBasicUnit(){
+      return this.basicUnit;
+    }
+
+    public void reInitBoard(int n){
+        this.arr=new ArrayList<cellInterface[]>(2*n);
+        this.depth=2*n;
+      // this.basicUnit=n;
+       this.fillBoard();
+       
+    }
+
+
+ public void printInitialFormat(){
+      int row=this.getDepth();
+
             System.out.println("Enter Cell no in wrt following format ");
 
             int index=1;
-
-
-
             for(int i=0;i<row;i++) 
             {
              boolean flag=true;
@@ -978,14 +906,159 @@ private void PrintInitialForamat(int choice){
                   flag=!flag;index++;
                 }
                   System.out.println();
-            
+            }}
+
+
+            public void updateBoard(int x,int y,char ch){
+        this.arr.get(x)[y]=new HexCell(ch);
+    }
+
+    public boolean checkIfBoardIsFull(){
+       boolean flag=true;
+        for(int i=0;i<this.getDepth();i++){
+            for(int j=0;j<this.getDepth();j++){
+
+            char tmp=arr.get(i)[j].getChar(); 
+              if(tmp!='X' &&  tmp!='O' && tmp!='*') {flag=  false; };
             }
-      
-      }        
-      
+        }
+
+        return flag;
+    }
+    
+
+    public ArrayList<cellInterface[]> getBoardPositions(){return this.arr;}
+
+    public char getCharAtPosition(int x,int y){
+      return arr.get(x)[y].getChar();
+    }
+ 
+
+   }
+
+
+
+
+
+
+
+//--------------------------------------------------------------------------------------------------------------------------
+
+
+//second interface  (game manager will talk to Play GameManager)
+// Board, Player,Judge all will communicate with each other using this class only.
+
+interface PrimaryGameManagerInterface{
+ void playGame();
+   void configureGame(int gameChoice,int cellChoice,int dimension,String pathToStoreWinner);
+
 
 }
-  public void playGame(int ch1)
+interface GameManagerInterface extends PrimaryGameManagerInterface{
+  
+
+    void exitGame();
+    int getDepthOfBoard();
+   
+    void printBoardStatus();
+    int[]getFreeCellOfBoard();
+     
+ 
+     String getPath();
+      void printMessage(String s);
+      int getUserIntegerInput();
+}
+
+class GameManager implements GameManagerInterface {
+  
+  private BoardInterface b1;
+  private String path;
+  private Player firstPlayer;
+  private Player secondPlayer;
+  private JudgeInterface j1;
+  private static GameManagerInterface cm1;
+  private int basicUnit;
+  private int depth;
+  private UserInteractionInterface u1;
+
+  private GameManager(){}
+
+  public static GameManagerInterface getGameManager(){
+    if(cm1==null){cm1=new GameManager();}
+    return cm1;
+  }
+
+
+
+  public void configureGame(int gameChoice,int cellChoice,int basicUnit, String path)
+    {   
+        this.path=path;
+
+        this.basicUnit=basicUnit;
+
+          u1=new UserInteraction();
+
+         b1=this.getBoard(cellChoice,basicUnit);
+        
+        Player[] tmp=getPlayer(gameChoice);
+      firstPlayer=tmp[0];
+      secondPlayer=tmp[1];
+
+       j1=getJudge(cellChoice);
+
+    this.playGame();
+
+    
+  }
+
+  private BoardInterface getBoard(int cellChoice,int basicUnit){
+
+    if(cellChoice==1){
+      return HexBoard.getHexBoard(basicUnit);
+    }
+        return SquareBoard.getSquareBoard(basicUnit);
+  }
+
+
+
+  private Player[] getPlayer(int choice){
+    Player[] tmp=new Player[2];
+    if(choice==1)
+    {
+        tmp[0]=getHumanPlayer(0);
+        tmp[1]=getHumanPlayer(1);
+    }
+    else{
+          tmp[0]=getHumanPlayer(0);
+          tmp[1]=getComputerPlayer();
+    }
+    return tmp;
+  }
+
+
+
+
+            private Human getHumanPlayer(int n)
+            {return new Human(this,n);}
+
+            private Computer getComputerPlayer()
+            {return new Computer(this);}
+
+
+
+
+            private JudgeInterface getJudge(int choice){
+              JudgeInterface tmp;
+              if(choice==1)
+              tmp=new JudgeHex();
+              else tmp=new JudgeSquare();
+
+              return tmp;
+            }
+
+
+
+  public void playGame()
 
   {  
       String s;
@@ -994,30 +1067,31 @@ private void PrintInitialForamat(int choice){
 
         // Flag is used to know if any one has won
 
-    boolean f1=false;
+        boolean f1=false;
 
-      while(true){ 
+          while(true){ 
 
-      int row=b1.getDepth();
-      int col=row;
-     int depth=row;
-         Player whoseTurn=firstPlayer;
+        int row=this.getDepthOfBoard();
+     
+        Player whoseTurn=firstPlayer;
 
-      boolean chance =true;   // which Player has its turn 
-      boolean flag=false;
+          boolean chance =true;   // which Player has its turn 
+          boolean flag=false;
              
-      int s1=0;
-      int s2=0;
-        System.out.println();System.out.println();
+          int s1=0;  //Scores
+          int s2=0;
+        System.out.println();
+        System.out.println();
         int index=1;
-      PrintInitialForamat(ch1);
+
+        this.printInitialFormat();
 
 
 
-      s="Initial Board Status is: ";
-      this.printMessage(s);
+           s="Initial Board Status is: ";
+            this.printMessage(s);
 
-      this.printBoardStatus();
+          this.printBoardStatus();
 
       while(!this.checkIfBoardIsFull())
       {
@@ -1027,9 +1101,16 @@ private void PrintInitialForamat(int choice){
             while(true){
             pos=this.nextMove(whoseTurn);
 
-            if(checkIfThisIsValidPosition(pos)){
-                break;
-            }}
+            boolean t1=checkIfThisIsValidPosition(pos);
+            if(!t1)
+              { 
+                s="Please enter valid cell no";
+                this.printMessage(s);
+             }
+              else{ break;}
+            }
+
+
             char ch='O';
             
             if(!chance) 
@@ -1067,7 +1148,7 @@ private void PrintInitialForamat(int choice){
 
 
 
-            if(this.checkIfGameIsOver(pos,ch1))
+            if(this.checkIfGameIsOver(pos))
             {  f1=true;
                   if(whoseTurn.equals(firstPlayer))
                   { s2+=depth;
@@ -1085,7 +1166,8 @@ private void PrintInitialForamat(int choice){
 
        }
 
-       if(flag){ b1.reInitBoard(depth*depth,depth);}
+       if(flag){
+       b1.reInitBoard(row*row);}
        else{break;}
 
      }
@@ -1095,16 +1177,20 @@ private void PrintInitialForamat(int choice){
     }
 
 
+
+//depth of board
+
+  public int getDepthOfBoard(){
+    return b1.getDepth();
+  }
+
+//Initial format
+      public void printInitialFormat(){
+        b1.printInitialFormat();
+      }
+
     
-
-
-    public void exitGame()
-    {
-
-      System.exit(0);
-    }
-
-
+//Board Status
     public void printBoardStatus()
     { 
       int row=b1.getDepth();
@@ -1120,33 +1206,21 @@ private void PrintInitialForamat(int choice){
 
     }
 
-  private BoardInterface getBoard(int n,int choice){
-        return Board.getBoard(n,choice);
+    public char getCharAtPosition(int i,int j){
+      return (char)this.b1.getCharAtPosition(i,j);
+    }
+
+//check board is full
+
+  private boolean checkIfBoardIsFull(){
+
+    return b1.checkIfBoardIsFull();
+   
+
   }
 
-  private Human getHumanPlayer(int n)
-  {return new Human(this,n);}
 
-  private Computer getComputerPlayer()
-  {return new Computer(this);}
-
-  private JudgeInterface getJudge(){
-    return new JudgeSquare();
-  }
-
-
-  public int[] getFreeCellOfBoard(){
-    return this.b1.getEmpty();
-  }
-
-  private void updateBoard(int[]pos,char ch){
-    this.b1.updateBoard(pos[0],pos[1],ch); 
-  }
-
-  private int[] nextMove(Player p1){
-    return p1.nextMove();
-  }
-
+//print message
   private void printMessage(Player whoseTurn,int []pos,char ch){
 
 
@@ -1155,25 +1229,75 @@ private void PrintInitialForamat(int choice){
   String s=whoseTurn.getTitle()+" has put "+ch+" on cell "+(cell+1);
   u1.showMessageToUser(s);
   }
-  private void printMessage(String s){
+
+  public void printMessage(String s){
     u1.showMessageToUser(s);
   }
 
 
-  private boolean checkIfBoardIsFull(){
-    return this.b1.isFull();
+
+//next Move
+ private int[] nextMove(Player p1){
+    return p1.nextMove();
   }
 
-  private boolean checkIfGameIsOver(int pos[],int choice){
+
+   //valid position
+
+  private boolean checkIfThisIsValidPosition(int[] pos){
+    int i=pos[0];
+    int j=pos[1];
+    char tmp=getCharAtPosition(i,j);
+if(i>=0 && j>=0 && i<this.getDepthOfBoard() && j<this.getDepthOfBoard() && tmp!='X' && tmp!='O'  && tmp!='*') {return true;}
+      return false;
+
+  } 
 
 
+//Free cell Of Board
+  public int[] getFreeCellOfBoard(){
 
+    int [] pos=new int[2];
+      boolean flag=false;
+      for(int i=0;i<this.getDepthOfBoard();i++)
+      {
+        for(int j=0;j<this.getDepthOfBoard();j++)
+        {
+          char tmp=getCharAtPosition(i,j);
+            if(tmp!='X' && tmp!='O' && tmp!='*' )
+            {
+              pos[0]=i;
+              pos[1]=j;
+               
+              flag=true;
+              break;
+          }
+        }
+        
+        if(flag){break;}
+      }
+      return pos;
+  }
+
+//update
+private void updateBoard(int[]pos,char ch){
+
+
+    this.b1.updateBoard(pos[0],pos[1],ch); 
+  }
+
+  
+ 
+
+  private boolean checkIfGameIsOver(int pos[]){
+
+
+      if(j1 instanceof JudgeHex){
+        return  j1.gameOver(b1.getBoardPositions(),pos[0],pos[1]); 
+      }
 
        
-    if(choice==1){
-      return  j1.gameOver(b1.getBoardPositions(),pos[0],pos[1]);
-    }
-
+    
     return j1.gameOver(b1.getBoardPositions(),b1.getBasicUnit(),b1.getDepth() );
   }
 
@@ -1181,15 +1305,8 @@ private void PrintInitialForamat(int choice){
     j1.declareWinner(p1);
   }
 
-  private int getUserIntegerInput(){return u1.intInput();}
+ 
 
-  private boolean checkIfThisIsValidPosition(int[] pos){
-    return this.b1.isValid(pos[0],pos[1]);
-  }
-
-  public int getDepthOfBoard(){
-    return b1.getDepth();
-  }
 
   private void saveToLeaderBoard(Player p1,int score) {
 
@@ -1204,22 +1321,31 @@ private void PrintInitialForamat(int choice){
 
 
  public String getPath(){return this.path;}
+
+
+ public int getUserIntegerInput(){return u1.intInput();}
+
+ public void exitGame()
+ {
+  System.exit(0);
+ }
+
 } 
 
 
 
+//----------------------------------------------------------------------------------------------------------------------------
+
 //first interface user will contact with this interface only to start the game.
 
 interface PrimaryControlManagerInterface{
-  void startNewGame(int i,String path);
+  void startNewGame(int gameChoice,int cellChoice,int dimension, String pathToStoreWinner);
     void exitGame();
 }
 interface ControlManagerInterface extends PrimaryControlManagerInterface{
     void showInfo(String path);
     void showLeaderBoard(String path);
 
-    
- //   ControlManager getControlManager();
 }
 
 class ControlManager implements ControlManagerInterface{
@@ -1238,12 +1364,12 @@ class ControlManager implements ControlManagerInterface{
 
 
 
-    public void startNewGame(int choice,String path){
+    public void startNewGame(int gameChoice,int cellChoice,int dimension,String path){
       
       configMI=GameManager.getGameManager();
     
      
-    this.configMI.configureGame(choice,path);
+    this.configMI.configureGame(gameChoice,cellChoice,dimension, path);
     
 
   }
@@ -1253,7 +1379,7 @@ class ControlManager implements ControlManagerInterface{
       
        u1=new UserInteraction();
        String s;
-       int choice=0;
+       int choice=0,choice1=0;
       while(true){
           s="Enter 1 for Two Player Game , 2 for Human-Computer Game, 3 for exit, 4 to print leaderBoard";
           this.printMessage(s);
@@ -1264,11 +1390,29 @@ class ControlManager implements ControlManagerInterface{
          
         }
 
-         // System.out.println(choice); 
+        
       if(choice==1 || choice==2){
-       this.startNewGame(choice,path);
 
-      }
+        while(true){
+        s="Enter 1 HexCell and 2 for Square Cell, 3 for exit";
+        this.printMessage(s);
+         
+          choice1=this.getUserIntegerInput();
+
+          if(choice1==1 || choice1==2 || choice1==3){break;}
+          s="Enter valid choice!!!";
+          this.printMessage(s);
+            }
+       
+          if(choice1==3){this.exitGame();}
+        
+          s="Enter Board Dimension";
+          this.printMessage(s);
+          int dim=this.getUserIntegerInput();
+
+          this.startNewGame(choice,choice1,dim,path);
+
+    }
       else if(choice==3){
         this.exitGame();
 
@@ -1281,13 +1425,13 @@ class ControlManager implements ControlManagerInterface{
 
     }
 
-     private void printMessage(String s){
+     public void printMessage(String s){
     u1.showMessageToUser(s);
   }
     private int getUserIntegerInput(){return u1.intInput();}
 
-  public  void showLeaderBoard(String p1){
-    //  String p1=configMI.getPath();
+      public  void showLeaderBoard(String p1){
+  
        System.out.println("Previous leaders are");
        try{
       BufferedReader br = new BufferedReader(new FileReader(p1)); 
@@ -1296,13 +1440,15 @@ class ControlManager implements ControlManagerInterface{
   while ((st = br.readLine()) != null) 
     System.out.println(st); 
   
-      //System.out.println(p1);
+      
     }
     
-    catch(Exception e){}
+    catch(Exception e){String s="Error in Reading"; printMessage(s);}
 }
 }
 
+
+//-------------------------------------------------------------------------------------------
 
 public class Main{
 
