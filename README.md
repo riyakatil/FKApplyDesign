@@ -1,7 +1,7 @@
 # FKApplyDesign
 Tic Tac Toe Game Design<br>
-    Compile : javac<br>
-    Run    : java<br>
+    Compile : javac Main.java<br>
+    Run    : java Main<br>
    
 <h4> System Specifications<h5>
     1. Marker - Enum Class  for the symbols which can be present in one cell. <br>
