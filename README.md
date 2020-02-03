@@ -1,7 +1,7 @@
 # FKApplyDesign
 Tic Tac Toe Game Design
-    Compile : javac
-    Run .   : java
+    Compile : javac<br>
+    Run    : java<br>
    
 <h4> System Specifications<h5>
     1. Marker - Enum Class  for the symbols which can be present in one cell. <br>
@@ -17,7 +17,7 @@ Tic Tac Toe Game Design
     Design pattern.
     
    <h4> Goals for Future</h4>
-    1. Testing
-    2. MultiThreading Design
-    3. Multi Player Design.(Tournament Style)
+    1. Testing<br>
+    2. MultiThreading Design<br>
+    3. Multi Player Design.(Tournament Style)<br>
     
