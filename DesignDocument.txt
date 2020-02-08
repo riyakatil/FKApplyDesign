@@ -1,0 +1,281 @@
+
+
+__________________________________________________________________________________________________________	
+					DESIGN DOCUMENT TEMPLATE
+__________________________________________________________________________________________________________	
+
+
+
+__________________________________________________________________________________________________________	
+					PROJECT GAME DESIGN
+__________________________________________________________________________________________________________	
+
+
+
+
+Design Document Must Contain Following Things:
+	Describe Each Feature With Status, Design Decision/Choices and Test Implementation
+	Feature Implementation 	: Replaced Completed with - Completed Or NotCompleted Or PartiallyCompleted
+	Design Decision 	: Done along with Detailed Description
+	Test Implementation    	: All Test Cases Covered For Each Feature
+
+Add Online Google Sheet URLs, Branch and Last Update	
+	Code Branch 	 : Fill Which Branch Should I See Your Code If Not Development Branch?	
+	Last Code Commit : When You Committed Your Last Changes In Above Mentioned Branch?
+
+
+SECTION  I: First Iteration Game Project Design
+	[Till Phase III or Phase IV Submitted Upto 29th January, 2020]
+
+PART I: Design Diagrams
+	Sequence Diagrams
+	Class Diagrams
+	Dependency Diagrams
+
+PART II : Common Design/Choices and Conventions/Assumptions and Detailed Descriptions etc.
+
+PART III : Feature Specific Design/Choices and Conventions/Assumptions 
+
+GameDesign v2.0	- Requirement I
+	Completed - 1. Tic-Tac-Toe consists of 3x3 Square Cells
+		Cell Interface
+	Completed - 2. Game Between Two Humans
+		Only Human type of player
+	Completed - 3. Game Between Human and Machine
+		2 type of player are present - computer and human
+	Completed - 4. Winning Criteria - 3 Cells in Row/Column/Diagonal are in Same State.
+		Judge will decide , winning criteria
+	Completed - 5. Announce Winning Player
+		Judge will decide who is winner 
+	Completed - 5. Announce Winning Player
+
+
+GameDesign v2.0	- Requirement II
+	Completed - 6. Enhanced Tic-Tac-Toe Game Consist of 9x9 Squares...
+	
+	Completed - 7. Enhanced Tic-Tac-Toe will continue to expand in depth levels...
+		
+	Completed - 8. Extend Game to 4x4 Board
+		
+	Completed - 9. Human Player is Biased...
+		
+	Completed - 10. Storing and Retrieving Game State
+		
+	Completed- 11. Store Players Game Statistics: Leaderboard
+		
+
+GameDesign v3.0	- Requirement III
+	Completed- 12. Super Tic-Tac-Toe Game Extends Enhanced Tic-Tac-Toe Game...
+		Feature Specific Design Decision?
+	Completed - 13. Design Winning and Losing Criterias On All Edges...
+		Feature Specific Design Decision?
+	Completed - 14. Incorporate Irregular shaped Hexagonal Boards
+		Feature Specific Design Decision?
+
+GameDesign v4.0	- Requirement IV
+	Completed - 15. Incorporate Biased Game Board
+		HUMAN CAN UNDO ITS LAST TURN
+Completed- 16.Incorporate Connect Four Game In Design
+		
+Completed - 17. Discover Newer Abstract Types
+		
+Completed- 18. Refactor and Reuse Code In Both Games
+		
+
+	
+SECTION II: Second Iteration[Refactoring/Redesign] Game Project Design 
+	[Till Phase III or Phase IV Submitted Upto 03rd February, 2020]
+
+PART I : Common Design/Choices, Conventions and Assumptions
+	Sequence Diagrams
+	Class Diagrams
+	Dependency Diagrams
+
+PART II : Common Design/Choices and Conventions/Assumptions and Detailed Descriptions etc.
+
+PART III: Feature Specific Design/Choices, Conventions and Assumptions	
+
+GameDesign v2.0	- Requirement I
+	Completed - 1. Tic-Tac-Toe consists of 3x3 Square Cells
+		
+Completed - 2. Game Between Two Humans
+		
+	Completed - 3. Game Between Human and Machine
+		
+	Completed - 4. Winning Criteria - 3 Cells in Row/Column/Diagonal are in Same State.
+		
+Completed- 5. Announce Winning Player
+		
+
+GameDesign v2.0	- Requirement II
+	Completed - 6. Enhanced Tic-Tac-Toe Game Consist of 9x9 Squares...
+		
+	Completed - 7. Enhanced Tic-Tac-Toe will continue to expand in depth levels...
+		
+	Completed - 8. Extend Game to 4x4 Board
+		
+	Completed - 9. Human Player is Biased...
+		
+	Completed - 10. Storing and Retrieving Game State
+		
+	Completed - 11. Store Players Game Statistics: Leaderboard
+		
+GameDesign v3.0	- Requirement III
+	Completed - 12. Super Tic-Tac-Toe Game Extends Enhanced Tic-Tac-Toe Game...
+		
+	Completed - 13. Design Winning and Losing Criterias On All Edges...
+	
+	Completed - 14. Incorporate Irregular shaped Hexagonal Boards
+		
+
+GameDesign v4.0	- Requirement IV
+	Completed - 15. Incorporate Biased Game Board
+		
+	Completed - 16.Incorporate Connect Four Game In Design
+	
+	Completed - 17. Discover Newer Abstract Types
+		
+	Completed - 18. Refactor and Reuse Code In Both Games
+		
+SECTION III: GameDesign Project Feature and Test Cases Implementation Status and Description
+
+GameDesign v1.0 - Requirement I
+
+NotCompleted 	- 1. Tic-Tac-Toe consists of 3x3 Square Cells
+	TestCases:
+	Test1 : Test Generation of 3x3 Board
+		Mention Class Name and Function Names?
+	Test2 : Test Initialisation of 3x3 Board
+		Mention Class Name and Function Names?
+	Test3 : Test Cell Generation
+		Mention Class Name and Function Names?
+
+NotCompleted 	- 2. Game Between Two Humans
+	TestCases:
+	Test1 : Test Title 
+		Mention Class Name and Function Names?
+	Test2 : Test Title
+		Mention Class Name and Function Names?
+
+NotCompleted 	- 3. Game Between Human and Machine
+	TestCases:
+	Test1 : Test Title
+		Mention Class Name and Function Names?
+	Test2 : Test Title
+		Mention Class Name and Function Names?
+
+NotCompleted - 4. Winning Criteria - 3 Cells in Row/Column/Diagonal are in Same State.
+	TestCases:
+	Test1 : Test Title
+		Mention Class Name and Function Names?
+	Test2 : Test Title
+		Mention Class Name and Function Names?
+
+Completed - 5. Announce Winning Player
+
+GameDesign v2.0	- Requirement II
+
+NotCompleted - 6. Enhanced Tic-Tac-Toe Game Consist of 9x9 Squares...
+	TestCases:
+	Test1 : Test Title
+		Mention Class Name and Function Names?
+	Test2 : Test Title
+		Mention Class Name and Function Names?
+
+NotCompleted - 7. Enhanced Tic-Tac-Toe will continue to expand in depth levels...
+	TestCases:
+	Test1 : Test Title
+		Mention Class Name and Function Names?
+	Test2 : Test Title
+		Mention Class Name and Function Names?
+
+CNotompleted - 8. Extend Game to 4x4 Board
+	TestCases:
+	Test1 : Test Title
+		Mention Class Name and Function Names?
+	Test2 : Test Title
+		Mention Class Name and Function Names?
+
+NotCompleted - 9. Human Player is Biased...
+	TestCases:
+	Test1 : Test Title
+		Mention Class Name and Function Names?
+	Test2 : Test Title
+		Mention Class Name and Function Names?
+
+NotCompleted - 10. Storing and Retrieving Game State
+	TestCases:
+	Test1 : Test Title
+		Mention Class Name and Function Names?
+	Test2 : Test Title
+		Mention Class Name and Function Names?
+
+NotCompleted - 11. Store Players Game Statistics: Leaderboard
+	TestCases:
+	Test1 : Test Title
+		Mention Class Name and Function Names?
+	Test2 : Test Title
+		Mention Class Name and Function Names?
+
+
+GameDesign v3.0	- Requirement III
+
+NotCompleted - 12. Super Tic-Tac-Toe Game Extends Enhanced Tic-Tac-Toe Game...
+	TestCases:
+	Test1 : Test Title
+		Mention Class Name and Function Names?
+	Test2 : Test Title
+		Mention Class Name and Function Names?
+
+NotCompleted - 13. Design Winning and Losing Criterias On All Edges...
+	TestCases:
+	Test1 : Test Title
+		Mention Class Name and Function Names?
+	Test2 : Test Title
+		Mention Class Name and Function Names?
+
+NotCompleted - 14. Incorporate Irregular shaped Hexagonal Boards
+	TestCases:
+	Test1 : Test Title
+		Mention Class Name and Function Names?
+	Test2 : Test Title
+		Mention Class Name and Function Names?
+
+
+GameDesign v4.0	- Requirement IV
+
+NotCompleted - 15. Incorporate Biased Game Board
+	TestCases:
+	Test1 : Test Title
+		Mention Class Name and Function Names?
+	Test2 : Test Title
+		Mention Class Name and Function Names?
+
+NotCompleted - 16. Incorporate Connect Four Game In Design
+	TestCases:
+	Test1 : Test Title
+		Mention Class Name and Function Names?
+	Test2 : Test Title
+		Mention Class Name and Function Names?
+
+NotCompleted - 17. Discover Newer Abstract Types
+	TestCases:
+	Test1 : Test Title
+		Mention Class Name and Function Names?
+	Test2 : Test Title
+		Mention Class Name and Function Names?
+
+NotCompleted - 18. Refactor and Reuse Code In Both Games
+	TestCases:
+	Test1 : Test Title
+		Mention Class Name and Function Names?
+	Test2 : Test Title
+		Mention Class Name and Function Names?
+
+SECTION III: How to Run/Test Your Code?
+	Describe How To Run Your Code.  javac Main.java
+	Can I Run Test.java to test your whole source code?
+	Are you providing all Input/Output files to run Test Code using Test.java?
+
+	I have all you followed following guidelines given for writing test cases, if not then describe it what is working and what is not.
+
